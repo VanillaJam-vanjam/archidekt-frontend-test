@@ -2,7 +2,7 @@
 
 This React project aims to connect to a local Koa server and use its compiled json to generate a list of my saved decks in Archidekt
 
-**[Server project link](https://github.com/VanillaJam-vanjam/archidekt-backend-test):** 
+**[Server project link](https://github.com/VanillaJam-vanjam/archidekt-backend-test)** 
 
 ## How it's made
 
