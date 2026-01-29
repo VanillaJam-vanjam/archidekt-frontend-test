@@ -1,9 +1,18 @@
 import { useState, useEffect } from 'react'
-import * as styles from './styles/styles.jsx';
-import ColorBlock from './utils/colorChooser';
+import * as styles from './styles/styles.tsx';
+import ColorBlock from './utils/colorChooser.tsx';
+
+type Deck = {
+  name: string,
+  colors: string,
+  links: {
+    deckLink: string,
+    imageLink: string
+  }
+}
 
 function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Deck[]>([]);
   const [error, setError] = useState(null);
 
   // Fetch deck data from the local server
@@ -16,7 +25,7 @@ function App() {
       const data = await res.json();
       setData(data);
     } catch (err) {
-      setError(err.message);
+        //setError(err.message);
     }
   };
 

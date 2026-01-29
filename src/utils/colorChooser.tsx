@@ -1,4 +1,4 @@
-import { colorBlockStyle, colorSquareStyle } from "../styles/styles.jsx";
+import { colorBlockStyle, colorSquareStyle } from "../styles/styles.tsx";
 
 const colors = {
     red: [241, 165, 139],
@@ -11,8 +11,8 @@ const colors = {
 
 /**
  * @returns The average of the given colors in css format
- */ 
-function GetColorValue(colorString) {
+ */
+function GetColorValue(colorString: string) {
     let r = 0, g = 0, b = 0;
     if (colorString.length === 0) {
         return `rgb(${colors.colorless[0]},${colors.colorless[1]},${colors.colorless[2]})`;
@@ -36,9 +36,9 @@ function GetColorValue(colorString) {
                 colorPart = colors.green;
                 break;
         }
-        r += colorPart[0];
-        g += colorPart[1];
-        b += colorPart[2];
+        r += colorPart[0]!;
+        g += colorPart[1]!;
+        b += colorPart[2]!;
     });
 
     r /= colorString.length;
@@ -48,10 +48,14 @@ function GetColorValue(colorString) {
     return `rgb(${r},${g},${b})`
 }
 
-function ColorSquare({color}) {
+function ColorSquare({ color }: { color: string }) {
     return (
         <div style={{ ...colorSquareStyle, backgroundColor: GetColorValue(color) }} />
     )
+}
+
+type ColorBlockProps = {
+    colorString: string
 }
 
 /**
@@ -59,7 +63,7 @@ function ColorSquare({color}) {
  * @param {*} colorString String representing the colors in MTG's fomrat (WUBRG) 
  * @returns Colored squares representing the colors of the deck
  */
-function ColorBlock({ colorString }) {
+function ColorBlock({ colorString }: { colorString: string }) {
     console.log(colorString);
     return (
         <div>
