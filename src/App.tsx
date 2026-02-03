@@ -13,7 +13,7 @@ type Deck = {
 
 function App() {
   const [data, setData] = useState<Deck[]>([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown>(null);
 
   // Fetch deck data from the local server
   const fetchDeck = async () => {
@@ -24,8 +24,12 @@ function App() {
 
       const data = await res.json();
       setData(data);
-    } catch (err) {
-        //setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Unknown error occurred");
+      }
     }
   };
 
@@ -39,17 +43,18 @@ function App() {
         <h1>Aktiiviset pakat</h1>
       </div>
       <div>
-        {data?.map(deck => (
-          <div key={deck.name} style={styles.deckPreviewStyle}>
-            <a href={deck.links.deckLink}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <img src={deck.links.imageLink} alt={deck.name} />          {/* Deck image */}
-                <h2>{deck.name}</h2>                                        {/* Deck name with link */}
-                <ColorBlock colorString={deck.colors} />                    {/* Color block */}
-              </div>
-            </a>
-          </div>
-        ))}
+        {
+          data?.map(deck => (
+            <div key={deck.name} style={styles.deckPreviewStyle}>
+              <a href={deck.links.deckLink}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <img src={deck.links.imageLink} alt={deck.name} />          {/* Deck image */}
+                  <h2>{deck.name}</h2>                                        {/* Deck name with link */}
+                  <ColorBlock colorString={deck.colors} />                    {/* Color block */}
+                </div>
+              </a>
+            </div>
+          ))}
       </div>
     </div>
   )
